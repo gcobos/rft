@@ -1,0 +1,81 @@
+$def with (functions, total, order_by='title', next_page_url='', sub_title='Page 1')
+
+$# TODO:
+$# - show_vote_icons should be globally accessible
+
+$def show_vote_icons(vote, small_icons=False):
+    $ prefix = small_icons and 'small-' or ''
+    
+    $for i in range(1, 6):
+        $if vote >= i:
+            <img src="/img/star/$(prefix)full.gif" alt="X" />\
+        $elif vote >= i - 0.5:
+            <img src="/img/star/$(prefix)half.gif" alt=">" />\
+        $else:
+            <img src="/img/star/$(prefix)empty.gif" alt="_" />\
+    \
+
+<h2>All $total functions &#8211; $sub_title</h2>
+<table>
+    <tr>
+        <th 
+        $if not order_by or order_by == 'title': class="orderBy"
+        >
+        <a href="/list/">Title</a></th>
+        
+        <th 
+        $if order_by == 'author': class="orderBy"
+        >
+        <a href="/list/by-author/">Author</a></th>
+
+        <th
+        $if order_by == 'author': class="orderBy"
+        >
+        <a href="/list/by-author/">Primitive</a></th>
+
+        <th
+        $if order_by == 'author': class="orderBy"
+        >
+        <a href="/list/by-author/">Correct</a></th>
+
+        <th 
+        $if order_by == 'date': class="orderBy"
+        >
+        <a href="/list/by-date/">Date</a></th>
+        
+    </tr>
+
+    $for function in functions:
+        <tr
+        $if loop.even: class='alternative'
+        >
+            <td align="center"
+            $if not order_by or order_by == 'title': class="orderBy"
+            >
+            <a href="/show/$function.name/">$cut_length(function.name, 80)</a></td>
+            
+            <td align="center"
+            $if order_by == 'author': class="orderBy"
+            >
+            <a href="/author/$url_quote(function.author)/">$cut_length(function.author, 25)</a></td>
+            
+            <td align="center"
+            $if not order_by or order_by == 'title': class="orderBy"
+            >
+            <a href="/show/$function.name/">$yesno(function.isPrimitive)</a></td>
+
+            <td align="center"
+            $if not order_by or order_by == 'title': class="orderBy"
+            >
+            <a href="/show/$function.name/">$yesno(function.isCorrect)</a></td>
+
+            <td align="center"
+            $if order_by == 'date': class="orderBy"
+            >
+            $format_date(function.datetime_created, '%m/%d/%y')</td>
+            
+        </tr>
+</table>
+
+$if next_page_url:
+    <div class="nextPage"><a href="$next_page_url">&gt;&gt;Next page...</a></div>

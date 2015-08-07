@@ -1,0 +1,64 @@
+$def with (page, popular_functions, random_functions, by='Gonzalo Cobos', mode='mode', title='Generated Functions', query='')
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 3.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+    <title>$title</title>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss/latest.xml" />
+    <link rel="stylesheet" href="/css/default.css" type="text/css" media="screen, projection, print" />
+    <!--<link rel="icon" type="image/png" href="/img/favicon.ico" />-->
+    <script type="text/javascript" src="/js/default.js"></script>
+</head>
+
+<body class="$mode">
+<div class="page">
+
+<div class="content">
+<h1><a href="/"><img src="/img/logo.gif" alt="Create functions and use later by RPC" /></a></h1>
+    <div class="innerContent">
+    $:page
+    
+    <div class="footer">
+        <a href="/about/">About</a> | <a href="/feedback/">Feedback</a> | <a href="/help/">FAQ</a> | <a href="/rss/latest.xml">RSS of Latest Functions</a><br />
+        <span class="copyright">By $by - Only for fun & educational purposes<br /></span>
+    </div>
+
+    </div>
+</div>
+
+<div class="context">
+<div class="links">
+    <p class="submit"><a href="/submit/"><img src="/img/add-function.gif" alt="&gt;&gt; Submit function" /></a></p>
+    <form action="/search" method="get">
+        <div class="searchForm">
+        <input type="text" name="q" size="12" value="$query" class="searchBox" />
+        <input type="submit" value="Search" class="searchButton" />
+$#        <input type="hidden" name="mode" value="showSearchResults" />
+        </div>
+    </form>
+   <div class="importantLinks">
+        <a href="/list/">View all functions</a><br />
+   </div>
+    
+
+    <strong>Random Functions</strong><br />
+    <ul class="randomFunctions">
+    $for function in random_functions:
+        <li><a href="/show/$url_quote(function.name)/">$cut_length(function.name)</a></li>
+    </ul>
+</div>
+</div>
+
+</div>
+<!--
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-60595-15";
+urchinTracker();
+</script>
+-->
+</body>
+</html>
+    

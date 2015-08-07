@@ -1,0 +1,73 @@
+$def with (function, primitives='', bestNode='', minError=1.0, numNodes=0, message='')
+
+$def show_vote_icons(vote, small_icons=False):
+    $ prefix = small_icons and 'small-' or ''
+    
+    $for i in range(1, 6):
+        $if vote >= i:
+            <img src="/img/star/$(prefix)full.gif" alt="X" />\
+        $elif vote >= i - 0.5:
+            <img src="/img/star/$(prefix)half.gif" alt=">" />\
+        $else:
+            <img src="/img/star/$(prefix)empty.gif" alt="_" />\
+    \
+
+$def show_adsense():
+    <script type="text/javascript"><!--
+    google_ad_client = "$pub_id";
+    google_ad_width = 468;
+    google_ad_height = 60;
+    google_ad_format = "468x60_as";
+    google_ad_type = "text";
+    google_ad_channel ="9681339501";
+    google_color_border = "EEEEEE";
+    google_color_bg = "FFFFFF";
+    google_color_link = "159532";
+    google_color_url = "D37108";
+    google_color_text = "000000";
+    //--></script>
+    <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+
+<div class="message error">$message</div>
+
+<div class="standaloneModule">
+    <h2><u>Training "$function.name"</u></h2>
+    <div>
+        <strong>Primitives:</strong> $primitives
+    </div>
+    <div>
+        <strong>Formulas explored:</strong> $numNodes
+    </div>
+    <div>
+        <strong>Minimun error:</strong> $minError
+    </div>
+    <br />
+    <div>
+        <strong>Best formula:</strong> $bestNode
+    </div>
+    <br />
+    <div class="column"><a href="/edit/$url_quote(function.name)">Edit</a></div>
+    <div class="column"><a href="/train/$url_quote(function.name)">Train again</a></div>
+
+    <br /><br />
+    <div>
+        <strong>Source:</strong><br />
+        <pre>$function.source</pre>
+    </div>
+
+</div>
+
+$#:show_adsense()
+
+<!--
+<form action="/module/$function.id/comment/" method="post">
+<div>
+    Your name: <input type="text" name="author" size="30" /><br />
+    <textarea cols="84" rows="6" name="comment"></textarea><br />
+
+    <p class="submitButton"><input type="submit" value="Submit" /></p>
+</div>
+</form>
+-->

@@ -1,0 +1,10 @@
+
+* Que al hacer una función primitiva, se escriba un fichero con el código en un directorio de módulo
+* Que el boton Train solo salga para las funciones no primitivas y no correctas
+* Arreglar el getPrimitives
+* Hacer una función que me genere las fórmulas de menor a mayor complejidad para pode evaluarlas
+* modificar solver para que trabaje con ProblemData
+* Recuperar los nodos en forma de código (los hashes)
+- Guardar el estado de la función después de entrenar
+* Guardar los resultados de cada formula para todo el training set, y dar al getError() la fórmula como (func, *args),
+  donde cada argumento es la formula en string y el resultado del training set

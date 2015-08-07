@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: FSA
+Version: 1.0
+Summary: FSA utilities
+Home-page: http://osteele.com/software/pyfsa/
+Author: Oliver Steele
+Author-email: steele@osteele.com
+License: UNKNOWN
+Description: This package contains functions for manipulating Finite-State Automata (FSAs).  It includes functions for minimizing and determinizing FSAs, computing FSA intersections and unions, compiling a (non-POSIX) regular expression into an FSA, and compiling a set of regular expression productions into a chart parser.
+Platform: UNKNOWN

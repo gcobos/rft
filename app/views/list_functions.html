@@ -1,0 +1,20 @@
+$def with (functions, next_page_url='', sub_title='Latest Functions')
+
+
+<h2>$sub_title</h2>
+$if not functions:
+    <p>No results found.</p>
+
+$for function in functions:
+    <div class="previewModule">
+        <div class="title">
+            <strong><a href="/show/$function.name/">$function.name</a></strong>
+            &nbsp;<a href="/list/author/$function.author"><span class="author">($function.author)</span></a>
+        </div>
+        <div class="description">$function.description</div>
+        
+        <div class="category">Category: <a href="/list/category/$function.category">$function.category</a></div>
+    </div>
+
+$if next_page_url:
+    <div class="nextPage"><a href="$next_page_url">&gt;&gt;Next page...</a></div>

@@ -1,0 +1,72 @@
+$def with (function, categories=[], action='submit')
+
+<h2>Submit a function <span class="subtitle">(<a href="/help/">?</a>)</span></h2>
+
+<form action="/$action/" method="post"><div>
+        <input type="hidden" name="id" value="$function.id"/>
+        <input type="hidden" name="source" value="$function.source"/>
+<table width="100%">
+    <tr><td colspan="3"></td></tr>
+    <tr>
+    <td>Name</td><td><input type="text" size="30" name="name" value="$function.name" /></td><td class="footnote">Must be unique</td>
+    </tr>
+    <tr>
+    <td>Aliases</td><td><input type="text" size="30" name="aliases" value="$function.aliases" /></td><td class="footnote">space&nbsp;separated</td>
+    </tr>
+    <!--<tr>
+    <td>Tags</td><td><input type="text" size="30" name="tags" value="$#function.tags"/></td><td class="footnote">space&nbsp;separated</td>
+    </tr>-->
+    <tr>
+    <td>Category</td>
+    <td>
+        <select name="categoryId">
+            $for category in categories:
+                $var selected: ''
+                $if category.id==function.categoryId:
+                    <option selected="selected" value="$category.id">$category.name</option>
+                $else:
+                    <option value="$category.id">$category.name</option>
+        </select>
+    </td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td>Author</td><td><input type="text" size="30" name="author" value="$function.author"/></td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td>Description</td><td colspan="2"><textarea name="description" rows="4" cols="50">$function.description</textarea></td>
+    </tr>
+    <tr>
+    <td>Rules</td><td><textarea name="rules" rows="3" cols="30">$function.rules</textarea></td><td class="footnote">optional, set of functions to be used or exact source code to execute, if inserting a primitive</td>
+    </tr>
+    <tr>
+    <td>Training set</td><td><textarea name="training" rows="10" cols="35">$function.training</textarea></td><td class="footnote">set of inputs/outputs, one per line. i.e.:<br />1,2 = 3 </td>
+    </tr>
+    <tr>
+    <td></td><td><br /></td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td></td><td><input type="checkbox" name="isPrimitive" value="1" \
+$if function.isPrimitive: checked="checked"\
+    />Is primitive</td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td></td><td><input type="checkbox" name="isCorrect" value="1"\
+$if function.isCorrect: checked="checked"\
+    />Is correct</td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td>Options</td><td><input type="checkbox" name="isCommutative" value="1"\
+$if function.isCommutative: checked="checked"\
+    />Is commutative</td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td></td><td><input type="checkbox" name="isRecursive" value="1"\
+$if function.isRecursive: checked="checked"\
+    />Is recursive</td><td class="footnote"></td>
+    </tr>
+    <tr>
+    <td>&nbsp;</td><td class="submitButton"><input type="submit" value="Submit" /></td>
+    </tr>
+</table>
+
+</div></form>

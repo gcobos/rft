@@ -1,0 +1,36 @@
+﻿$def with (modules, comments, author)
+
+<div class="authorPage">
+
+<h2 class="mainHeadline">Modules by $author 
+    <span class="viewAuthors">(<a href="/authors/">View all authors</a>)</span>
+</h2>
+
+$for module in modules
+    <div class="previewModule">
+        <div class="screenshot">
+            <a href="/module/$function.id/"><img src="/img/screenshot/$function.name" alt="" /></a>
+        </div>
+        
+        <div class="title">
+            <strong><a href="/module/$function.id/">$function.name</a></strong>
+        
+            &nbsp;<span class="author">($function.author)</span>
+        </div>
+        <div class="description">$cut_length(function.description, 200)</div>
+        
+        <div class="addLink"><a href="http://www.google.com/ig/add?moduleurl=$function.description">&gt;&gt;Add module</a></div>
+    </div>
+
+<h2 class="latestComments">Latest comments on this author's modules</h2>
+$if not comments:
+    <p><em>None yet.</em></p>
+$else:
+    <ul>
+    $for comment in comments:
+        <li>On <a href="/module/$comment.module_id/">$comment.module_title</a>, $comment.author wrote: 
+        <em>&#8220;$cut_length(comment.content, 50)&#8221;</em>
+        </li>
+    </ul>
+
+</div>

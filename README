@@ -1,0 +1,41 @@
+Pages:
+
+- A principal page with a set of functions created (a lot of functions are natives and are used to combine with all others to create new ones)
+
+- A button to create a new function
+
+- A second page to create a function, with a box for the name and its aliases, another box to get the name of the parameters comma separated, a
+  description (rules), and a set of inputs->outputs for the training
+
+- The page to create a new function servers also to edit it, but there is a check to mark it as corrected (ie: it's correct for all inputs/outputs)
+
+How it works:
+
+- The system solves the problem retrieving all the sequences that fits the entire set of input/output pairs. If there are several sequences that
+  solves the problem, there's a posterior test that generates random inputs and checks if the results are equal, so the sequences are equivalent. If
+  there are results that not match perfectly, the system needs more training inputs.
+
+Solving system:
+
+- The system takes a list of parameters from the input, that evaluates with all the rules given. The rules can be given by the name of the functions to
+  use, or a formula, as the result given by the solver
+
+- There are a set of functions to use as primitives that come specified by the rules. That primitives get a number of parameters and generates
+  another list of results. The parameters are used with the functions given by the rules (for example, Sum), so after the function is solved, it
+  returns another parameter list conjugated with the name of the function: Sum(p1,p2). This way, the result sequence is the formula to the function,
+  that acts like a hash and is evaluable
+
+- In a first step, all the applicable primitive functions are solved with all variations of parameters. Then, the output of each one is solved again with
+  the applicable group of functions, and so on. Each result is internally represented as a functionId and a list of parameters between parenthesis, so
+  changes in the names or the aliases of the primitives doesn't affects to the other functions.
+
+- Once I have a formula, I can test the error with all the inputs and compare their results with the output values of the training to get an error. The error
+  can be tested using ransac, using each pair of outputs (real / desired) as components, so a model with pending 1 is closer to a solution
+
+
+Basic rules for constructing formulas:
+
+- A function cannot take any parameter or formula repeated.
+
+- The output of a function cannot be the input to the same function
+

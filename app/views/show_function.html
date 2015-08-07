@@ -1,0 +1,131 @@
+$def with (function, related_functions, pub_id, training=[])
+
+$def show_vote_icons(vote, small_icons=False):
+    $ prefix = small_icons and 'small-' or ''
+    
+    $for i in range(1, 6):
+        $if vote >= i:
+            <img src="/img/star/$(prefix)full.gif" alt="X" />\
+        $elif vote >= i - 0.5:
+            <img src="/img/star/$(prefix)half.gif" alt=">" />\
+        $else:
+            <img src="/img/star/$(prefix)empty.gif" alt="_" />\
+    \
+
+$def show_adsense():
+    <script type="text/javascript"><!--
+    google_ad_client = "$pub_id";
+    google_ad_width = 468;
+    google_ad_height = 60;
+    google_ad_format = "468x60_as";
+    google_ad_type = "text";
+    google_ad_channel ="9681339501";
+    google_color_border = "EEEEEE";
+    google_color_bg = "FFFFFF";
+    google_color_link = "159532";
+    google_color_url = "D37108";
+    google_color_text = "000000";
+    //--></script>
+    <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+
+<div class="standaloneModule">
+    <h2>$function.name
+    $if function.aliases:
+        <span class="subtitle">($function.aliases)</span>
+    </h2>
+
+    <div>
+        <strong>Author:</strong>
+    <a href="/list/author/$url_quote(function.author)/">$function.author</a>
+    </div>
+    <div>
+        <strong>Category:</strong>
+    <a href="/list/category/$url_quote(function.category)/">$function.category</a>
+    </div>
+
+    <p class="description"><strong>Description:</strong> $function.description</p>
+
+    <p class="description"><strong>Rules:</strong> $function.rules</p>
+
+
+    <p class="source"><strong>Source code:</strong>
+    $function.source
+    </p>
+
+    <p class="source"><strong>Primitive:</strong>
+    $if function.isPrimitive:
+        Yes
+    $else:
+        No
+    </p>
+    <p class="source"><strong>Commutative:</strong>
+    $if function.isCommutative:
+        Yes
+    $else:
+        No
+    </p>
+
+    <p class="source"><strong>Correct:</strong>
+    $if function.isCorrect:
+        Yes
+    $else:
+        No
+    </p>
+    <p class="source"><strong>Recursive:</strong>
+    $if function.isRecursive:
+        Yes
+    $else:
+        No
+    </p>
+
+    $if related_functions:
+        <div class="tags">
+        <strong>Related functions:</strong>
+
+        $for related in related_functions:
+            <a href="/tag/$url_quote(related.name)/">$related.name</a>
+        </div>
+    <!--
+    <form action="/module/$function.id/vote/" method="post"><div class="vote">
+    Vote:
+    <select name="vote">
+        <option value=""></option>
+        <option value="-5" />Unsafe</option>
+        <option value="0" />0 stars (worst)</option>
+        <option value="1" />1 star</option>
+
+        <option value="2" />2 stars</option>
+        <option value="3" />3 stars</option>
+        <option value="4" />4 stars</option>
+        <option value="5" />5 stars (best)</option>
+    </select>
+    <input type="submit" value="Submit" />
+    </div>
+    </form>
+    -->
+    <div class="column"><a href="/edit/$url_quote(function.name)">Edit</a></div>
+    $if not (function.isCorrect or function.isPrimitive):
+        <div class="column"><a href="/train/$url_quote(function.name)">Train</a></div>
+    $else:
+        <div class="column"><a href="/test/$url_quote(function.name)">Test function</a></div>
+</div>
+
+$#:show_adsense()
+
+$if related_functions:
+    $for related_function in related_functions:
+        <div class="nextPage nextModule">Related functions:
+            <a href="/function/$related_function.id/">$cut_length(related_function.name)</a>
+        </div>
+<!--
+<form action="/module/$function.id/comment/" method="post">
+<div>
+    Your name: <input type="text" name="author" size="30" /><br />
+    <textarea cols="84" rows="6" name="comment"></textarea><br />
+
+    <p class="submitButton"><input type="submit" value="Submit" /></p>
+</div>
+</form>
+-->
