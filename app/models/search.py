@@ -20,7 +20,7 @@ def search (query, offset=0, limit=10):
 
     q = [str(web.sqlquote('%%' + w + '%%')) for w in query.split()]
     where = []
-    for c in ['title', 'url', 'description', 'author']:
+    for c in ['m.name', 'm.tags', 'c.name']:
         where.append(sqlands('%s like ' % c, q))
     text_query = ' or '.join(where)
     
@@ -28,19 +28,12 @@ def search (query, offset=0, limit=10):
               'offset':offset, 'limit':limit+1, 'size':len(query)}
     
     m = list(db.query('\
-    (select distinct m.id, name, aliases, description, author, \
-        m.datetime_created as dates \
-        from function as m left join tags as t on m.id = t.module_id \
-        where %(tag_query)s \
-        group by t.module_id \
-        having count(t.module_id) >= %(size)d) \
-    union \
-    (select distinct m.id, name, aliases, description, author, \
-        m.datetime_created as dates \
-        from function as m \
+    (select distinct m.id, m.name, m.aliases, m.tags, m.description, m.author, \
+        m.datetime_created as dates, c.name as category \
+        from function as m left join category c ON m.categoryId = c.id \
         where %(text_query)s \
         order by datetime_created desc) \
-    order by votes desc, dates desc limit %(limit)d offset %(offset)d' \
+    order by id desc limit %(limit)d offset %(offset)d' \
     % params))
     
     has_next = len(m) > limit

@@ -29,8 +29,8 @@ class search:
              sub_title += ' - Page %s' % (page_number + 1)
         
         return render.layout(
-            view.list_modules(searched, next_page_url=next_page_url, sub_title=sub_title),
-            title = '%s - Google Modules' % sub_title, query = i.q)
+            view.list_functions(searched, next_page_url=next_page_url, sub_title=sub_title),
+            title = '%s - Functions' % sub_title, query = i.q)
 
 class list_by_tag:
     def GET(self, tag):

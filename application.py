@@ -36,7 +36,7 @@ urls = (
     '/test/([0-9a-zA-Z]+)/?',               'app.controllers.functions.Test',
 
     # search browse by function name
-    '/search/',                             'app.controllers.search.Search',
+    '/search/',                             'app.controllers.search.search',
     '/search/(.*?)/',                       'app.controllers.search.SearchResults',
     # paging?
     

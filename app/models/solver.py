@@ -27,6 +27,8 @@ LIM_THREADS = 2
 LIM_MEMORY = 3
 NOT_SOLVED = 4
 
+ERROR_TOLERANCE = 0.1
+
 # Process and store information of a function to train
 class ProblemData:
 
@@ -87,7 +89,7 @@ class ProblemData:
                         results.append("float('%s')" % repr(result))
                     else:
                         results.append(str(result))
-                    error += abs(result - expected)
+                    error += math.pow(result - expected, 2)
             else:
                 for row in zip(self._training, zip(*args)):
                     result=eval("%s(%s)" % (func, ','.join(row[1])), {}, environment)
@@ -96,15 +98,13 @@ class ProblemData:
                         results.append("float('%s')" % repr(result))
                     else:
                         results.append(str(result))
-                    error += abs(result - row[0][1])
-                    
+                    error += math.pow(result - row[0][1], 2)
             #print("Total error", error)
-        except:
-            print("Error trying to evaluate ",func,"with",args)
-            #print("Result should be", expected)
+        except Exception as e:
+            print("Error", e, "trying to evaluate ",func,"with",args)
             print traceback.print_exc()
             error = None
-            
+
         if not results:
             error = float("inf")
         return error, results
@@ -115,7 +115,7 @@ class ProblemData:
             return error, formula
         else:
             return (None, None)
-            
+
     def _parseTraining (self, data):
         if data:
             self.numParams = -1
@@ -149,7 +149,7 @@ class ProblemData:
             for i in data.split('\n'):
                 if len(i.strip())>0 and ':' in i:
                     (formula, error) = i.split(':')
-                    if formula and float(error)==0:
+                    if formula and float(error)==ERROR_TOLERANCE:
                         try:
                             if not latest_formula:
                                 latest_formula = formula
@@ -206,7 +206,6 @@ class Solver:
             #print("Nodes with least error", value)
             if float(value[0]) == 0:
                 return value
-            
         if not self._problem._primitives:
             return (None,None)
         try:

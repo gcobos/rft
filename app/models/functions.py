@@ -6,7 +6,7 @@ from config import db
 import string
 import sys
 
-from app.models import search
+from app.models import search as search_model
 from app.helpers import utils
 #from app.models.solver import Solver, ProblemData
 from app.models import solver
@@ -112,7 +112,7 @@ def getAllFunctions (order_by='name', limit=None, offset=None, **conditions):
 
 def search (query, offset=0, limit=10):
     """ Performs a search of functions by name, author, descripction, aliases, etc """
-    return search.search(query, offset, limit)
+    return search_model.search(query, offset, limit)
 
 
 def getFunctionIdByName (name):
@@ -342,9 +342,9 @@ def add (function):
 
         # Update primitives module
         result, message = updatePrimitivesModule()
-    except:
+    except Exception as e:
         result=False
-        message='Error adding function to the database'
+        message='Error adding function to the database', e
         t.rollback()
     else:
         t.commit()
